@@ -1,5 +1,6 @@
 import { View, Text, TouchableOpacity, StyleSheet, ActivityIndicator } from 'react-native'
 import React from 'react'
+import Icon from 'react-native-vector-icons/FontAwesome';
 
 const customButton = ({title, handlePress, style, isLoading}) => {
   return (
@@ -9,8 +10,11 @@ const customButton = ({title, handlePress, style, isLoading}) => {
     onPress={handlePress}
     disabled= {isLoading}
     >
-   {isLoading ? <ActivityIndicator color="#fff" /> : <Text style={styles.title}>{title}</Text>}
+   {isLoading ? <ActivityIndicator color="#fff" /> : <Text style={title === 'See Details' ? [styles.title, {textAlign: ''}]: styles.title}>{title}</Text>}
   </TouchableOpacity>
+  {title === 'See Details' && (
+  <Icon name='angle-right'  size={28} color="white" style={styles.icon}/> 
+  )}
     </View>
   )
 }
@@ -22,10 +26,17 @@ title: {
 textAlign: "center",
  color: 'white',
  fontWeight: 600,
- letterSpacing: 0.7
+ letterSpacing: 0.7,
+ fontSize: 17
 },
 button: {
 padding: 15,
-borderRadius: 8
+borderRadius: 8,
+backgroundColor: '#06102F',
+},
+icon: {
+  position: 'absolute',
+  bottom: 9,
+  left: 115
 }
 })

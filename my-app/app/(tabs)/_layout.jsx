@@ -10,20 +10,17 @@ export default function TabLayout() {
   return (
     <Tabs
       screenOptions={{
-        tabBarActiveTintColor: Colors[colorScheme ?? 'light'].tint,
+        tabBarActiveTintColor: 'white',
         headerShown: false,
+        tabBarStyle: {
+          backgroundColor: '#06102F',
+          height: 70
+        }
       }}>
-      <Tabs.Screen
-        name="index"
-        options={{
-          title: 'Home',
-          tabBarIcon: ({ color }) => <Ionicons size={28} name="apps" color={color} />,
-        }}
-      />
       <Tabs.Screen
         name="sign-in"
         options={{
-          title: 'Sign in',
+          title: 'Profile',
           tabBarIcon: ({ color }) => <Ionicons size={28} name="person" color={color} />,
         }}
       />

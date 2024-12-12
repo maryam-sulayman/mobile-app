@@ -1,13 +1,11 @@
-import { View, Text } from 'react-native'
+import { View } from 'react-native'
 import React from 'react'
+import Dashboard from '../../screens/Dashboard'
 
 const dashboard = () => {
   return (
     <View>
-      <Text>Welcome, Alexandra</Text>
-      <Text>My bookings</Text>
-      <Text>Book a room</Text>
-      <Text>Raise a complaint</Text>
+   <Dashboard/>
     </View>
     
   )
