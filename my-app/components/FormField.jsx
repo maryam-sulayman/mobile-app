@@ -19,7 +19,7 @@ const [showPassword, setshowPassword] = useState(false)
         {...props}/>
          {(title === 'Password'  || title ===  'Confirm Password') && (
         <TouchableOpacity onPress={()=> setshowPassword(!showPassword)}>
-         <Icon name={showPassword? 'eye' : 'eye-slash'}  size={20} color="#06102F" />
+         <Icon name={showPassword? 'eye-slash' : 'eye'}  size={20} color="#06102F" />
         </TouchableOpacity>
       )}
       {placeholder==='Search' && (
@@ -39,6 +39,7 @@ const styles = StyleSheet.create({
     borderColor: '#D9D9D9',
     paddingVertical: 15,
     paddingHorizontal: 10,
+    backgroundColor: '#F3F4F7',
     borderRadius: 8,
     marginVertical: 6,
     flexDirection: 'row',

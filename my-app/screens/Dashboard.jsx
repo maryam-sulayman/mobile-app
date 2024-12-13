@@ -19,7 +19,7 @@ const goToRooms = () => {
 }
 
 const goToSignIn = () => {
-  router.push('/pages/sign-in-page');
+  router.navigate('/pages/sign-in-page');
 }
 const recommendedRooms = rooms.filter(room => room.recommended === true)
 

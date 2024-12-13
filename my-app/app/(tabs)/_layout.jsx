@@ -17,8 +17,15 @@ export default function TabLayout() {
           height: 70
         }
       }}>
-      <Tabs.Screen
-        name="sign-in"
+        <Tabs.Screen
+        name="dashboard"
+        options={{
+          title: 'Dashboard',
+          tabBarIcon: ({ color }) => <Ionicons size={28} name="person" color={color} />,
+        }}
+      />
+        <Tabs.Screen
+        name="profile"
         options={{
           title: 'Profile',
           tabBarIcon: ({ color }) => <Ionicons size={28} name="person" color={color} />,

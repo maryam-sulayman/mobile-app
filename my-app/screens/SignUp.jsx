@@ -1,5 +1,5 @@
 import React, {useState} from "react";
-import { StyleSheet, View, Text, KeyboardAvoidingView, ScrollView, Platform, Image } from "react-native";
+import { StyleSheet, View, Text, KeyboardAvoidingView, ScrollView, Platform, Image, TouchableOpacity } from "react-native";
 import {router} from 'expo-router'
 import { SafeAreaView } from "react-native-safe-area-context";
 import CustomButton from "../components/CustomButton";
@@ -95,6 +95,9 @@ finally {
     setIsSubmitting(false);
   }
 }
+const goToSignIn = () => {
+  router.navigate('/pages/sign-in-page');
+}
   return (
     <KeyboardAvoidingView
     behavior={Platform.OS === "ios" ? "padding" : "height"} 
@@ -153,7 +156,9 @@ finally {
         />
         <View style={styles.signInContainer}>
           <Text style={styles.signInText}>Already have an account?</Text> 
-          <Link href="/sign-in" style={styles.signInLink}>Sign in</Link>
+          <TouchableOpacity onPress={goToSignIn}>
+          <Text style={styles.signInLink}>Sign In</Text>
+          </TouchableOpacity>
         </View>
       </View>
     </ScrollView>
@@ -168,24 +173,23 @@ const styles = StyleSheet.create({
    height: '100%'
   } , 
 container:{
-marginVertical: 20,
-marginHorizontal: 20,
-backgroundColor: 'white',
-paddingHorizontal: 20,
-paddingVertical: 30,
-borderRadius: 15,
+  marginVertical: 20,
+  marginHorizontal: 20,
+  backgroundColor: 'white',
+  paddingHorizontal: 20,
+  paddingVertical: 30,
+  borderRadius: 15,
 },
 title: {
-fontWeight: 700,
-fontSize: 24,
-textAlign: 'center',
-marginTop: 10,
-marginBottom: 20,
-color: '#06102F'
+  fontWeight: 700,
+  fontSize: 24,
+  textAlign: 'center',
+  marginTop: 10,
+  marginBottom: 20,
+  color: '#06102F'
 },
 form: {
   marginBottom: 20,
-  backgroundColor: 'pink',
 },
 signInContainer: {
   flexDirection: 'row',
