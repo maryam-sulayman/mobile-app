@@ -4,8 +4,10 @@ import FormField from '../components/FormField'
 import fetchRooms from '../utils/fetchRooms'
 import Icon from 'react-native-vector-icons/FontAwesome';
 import CustomButton from '../components/CustomButton';
+import { useRouter } from 'expo-router';
 
 const RoomList = () => {
+  const router = useRouter();
   const [rooms, setRooms] = useState([]);
 
   useEffect(() => {
@@ -15,7 +17,7 @@ const RoomList = () => {
 
   const renderRoom = ({ item }) => (
     <View style={styles.roomCard}>
-      <Image source={{ uri: item.image }} style={styles.roomImage} />
+      <Image source={{ uri: item.image }} style={styles.roomImage}/>
       <View style={styles.roomCardHeader}>
         <Text style={styles.roomName}>{item.name}</Text>
         <TouchableOpacity>
@@ -31,7 +33,14 @@ const RoomList = () => {
       </View>
       <View style={styles.buttonContainer}>
         <Text style={styles.roomPrice}>£{item.price} <Text style={styles.night}>/night</Text></Text>
-        <CustomButton title="See Details" style={styles.button} />
+        <CustomButton
+    title="See Details"
+    style={styles.button}
+    handlePress={() =>
+      router.push({ pathname: '/pages/single-room', params: { room: JSON.stringify(item) } })
+  }
+/>
+
       </View>
     </View>
   );

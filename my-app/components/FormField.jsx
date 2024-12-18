@@ -2,20 +2,20 @@ import { View, Text, StyleSheet, TextInput, TouchableOpacity } from 'react-nativ
 import React, { useState } from 'react'
 import Icon from 'react-native-vector-icons/FontAwesome';
 
-const FormField = ({title, value, placeholder, handleChangeText, style, error, ...props}) => {
+const FormField = ({title, value, placeholder, handleChangeText, style, error, textStyles,...props}) => {
 const [showPassword, setshowPassword] = useState(false)
 
   return (
     <View>
       <Text style={styles.title}>{title}</Text>
       <View style={[styles.formField, style]}>
-        <TextInput 
+      <TextInput 
         value={value}
         placeholder={placeholder}
-        placeholderTextColor='#7b7b8b'
+        placeholdertextStyles='#7b7b8b'
         onChangeText={handleChangeText}
         secureTextEntry = {(title === 'Password' || title === 'Confirm Password') && !showPassword}
-        style={styles.textInput}
+        style={[styles.textInput, textStyles]}
         {...props}/>
          {(title === 'Password'  || title ===  'Confirm Password') && (
         <TouchableOpacity onPress={()=> setshowPassword(!showPassword)}>

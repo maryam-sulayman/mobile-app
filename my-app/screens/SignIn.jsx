@@ -62,7 +62,7 @@ export default function SignIn() {
             </TouchableOpacity>
             <Text style={styles.title}>
               Sign in to
-              <Text style={styles.highlightedText}> Hotel</Text><Text style={{color: '#E1AF3A'}}>Hive</Text>
+              <Text> Hotel</Text><Text style={{color: '#E1AF3A'}}>Hive</Text>
               <Image
                 source={require("../assets/images/bee.png")}
                 resizeMode="contain"
@@ -116,7 +116,7 @@ const styles = StyleSheet.create({
   fontSize: 24,
   textAlign: 'center',
   marginBottom: 20,
-  color: '#06102F'
+  color: '#06102F',
   },
   form: {
    marginBottom: 20,
@@ -146,9 +146,6 @@ const styles = StyleSheet.create({
   bee: {
     width: 45,
     height: 45
-  },
-  logo: {
-    flexDirection: 'row'
   },
   returnContainer: {
     flexDirection: 'row',

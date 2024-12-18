@@ -2,7 +2,7 @@ import { View } from 'react-native'
 import React from 'react'
 import SingleRoom from '../../screens/SingleRoom'
 
-const singleRoom = () => {
+const SingleRoomPage = () => {
   return (
     <View>
       <SingleRoom/>
@@ -10,4 +10,4 @@ const singleRoom = () => {
   )
 }
 
-export default singleRoom
+export default SingleRoomPage
