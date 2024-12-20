@@ -1,13 +1,13 @@
 import React from 'react'
-import SingleRoom from '../../screens/SingleRoom'
+import RoomList from '../../screens/RoomList'
 import { SafeAreaView } from 'react-native-safe-area-context'
 
-const SingleRoomPage = () => {
+const roomlist = () => {
   return (
     <SafeAreaView>
-      <SingleRoom/>
+      <RoomList />
     </SafeAreaView>
   )
 }
 
-export default SingleRoomPage
+export default roomlist

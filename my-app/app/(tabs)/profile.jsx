@@ -1,9 +1,13 @@
 import React from 'react'
+import {SafeAreaView} from 'react-native-safe-area-context'
+import Profile from '../../screens/Profile'
 
-function profile() {
+const profilePage = () => {
   return (
-    <div>profile</div>
+    <SafeAreaView>
+    <Profile/>
+    </SafeAreaView>
   )
 }
 
-export default profile
+export default profilePage

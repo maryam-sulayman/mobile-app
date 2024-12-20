@@ -1,12 +1,54 @@
-import { Image, TouchableOpacity, Text, View, StyleSheet, ScrollView } from 'react-native';
+import { Image, TouchableOpacity, Text, View, StyleSheet, ScrollView, Alert } from 'react-native';
 import React from 'react';
 import CustomButton from '../components/CustomButton'
 import { useLocalSearchParams } from 'expo-router';
 import Icon from 'react-native-vector-icons/FontAwesome';
+import {auth, database} from "../fireBaseConfig";
+import {router}  from 'expo-router'
+import { ref, get } from 'firebase/database';
+
 
 const SingleRoom = () => {
   const { room } = useLocalSearchParams();
   const parsedRoom = JSON.parse(room); 
+
+  const checkUserInDatabase = async (uid) => {
+    try {
+      const userRef = ref(database, `users/${uid}`); 
+      const userSnapshot = await get(userRef); 
+      
+      if (userSnapshot.exists()) {
+        return true; 
+      } else {
+        return false; 
+      }
+    } catch (error) {
+      console.error('Error fetching user data:', error);
+      return false;
+    }
+  };
+
+  const handleBookRoom = async () => {
+    const user = auth.currentUser;
+  
+    if (!user) {
+      Alert.alert(
+        'Login Required',
+        'You need to be logged in to book a room.',
+        [
+          { text: 'Cancel', style: 'cancel' },
+          { text: 'Sign In', onPress: () => router.push('/auth/sign-in') },
+        ]
+      );
+      return; 
+    } 
+
+      const userInDB = await checkUserInDatabase(user.uid);
+      if (userInDB) {
+        router.push('/pages/payment'); 
+      }
+  }
+  
 
   return (
     <ScrollView >
@@ -49,7 +91,7 @@ const SingleRoom = () => {
          <Text style={styles.priceLabel}>Price:</Text>{'  '}
           £{parsedRoom.price} <Text style={styles.night}>/night</Text>
         </Text>
-        <CustomButton title='Book now' style={styles.button}/>
+        <CustomButton title='Book now' style={styles.button} handlePress={handleBookRoom}/>
     </ScrollView>
   );
 };
@@ -89,7 +131,7 @@ const styles = StyleSheet.create({
     gap: 5,
   },
   roomLocation: {
-    fontSize: 17,
+    fontSize: 16.5,
     color: '#A09E9E',
   },
   description: {
@@ -102,7 +144,7 @@ const styles = StyleSheet.create({
     fontSize: 20,
     fontWeight: 'bold',
     color: '#06102F',
-    marginTop: 25,
+    marginTop: 30,
     paddingLeft: 15
   },
   night: {
@@ -118,7 +160,10 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     marginTop: 8,
-    paddingHorizontal: 10
+    paddingHorizontal: 10,
+    borderBottomWidth: 1,
+    borderColor: 'pink',
+    paddingBottom: 15,
   },
   amenity: {
     backgroundColor: '#E1E0E6',
@@ -134,6 +179,6 @@ const styles = StyleSheet.create({
   },
   button: {
     marginHorizontal: 15,
-    marginVertical: 30
+    marginTop: 35
   }
 });

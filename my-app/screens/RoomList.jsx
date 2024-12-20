@@ -40,7 +40,6 @@ const RoomList = () => {
       router.push({ pathname: '/pages/single-room', params: { room: JSON.stringify(item) } })
   }
 />
-
       </View>
     </View>
   );

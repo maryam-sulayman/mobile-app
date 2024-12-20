@@ -1,11 +1,8 @@
 import { Tabs } from 'expo-router';
 import React from 'react';
 import { Ionicons } from '@expo/vector-icons';
-import { Colors } from '@/constants/Colors';
-import { useColorScheme } from '@/hooks/useColorScheme';
 
 export default function TabLayout() {
-  const colorScheme = useColorScheme();
 
   return (
     <Tabs
@@ -13,22 +10,49 @@ export default function TabLayout() {
         tabBarActiveTintColor: 'white',
         headerShown: false,
         tabBarStyle: {
-          backgroundColor: '#06102F',
-          height: 70
+          backgroundColor: '#040C25',
+          height: 70,
+          borderColor: 'black',
         }
       }}>
         <Tabs.Screen
-        name="dashboard"
+        name="home"
         options={{
-          title: 'Dashboard',
-          tabBarIcon: ({ color }) => <Ionicons size={28} name="person" color={color} />,
+          title: 'Home',
+          tabBarIcon: ({ color }) => <Ionicons size={23} name="home" color={color} />,
+          tabBarLabelStyle: {
+            fontSize: 11
+          },
+        }}
+      />
+         <Tabs.Screen
+        name="rooms"
+        options={{
+          title: 'Rooms',
+          tabBarIcon: ({ color }) => <Ionicons size={23} name="bed" color={color} />,
+          tabBarLabelStyle: {
+            fontSize: 11
+          },
+        }}
+      />
+         <Tabs.Screen
+        name="bookings"
+        options={{
+          title: 'Bookings',
+          tabBarIcon: ({ color }) => <Ionicons size={23} name="calendar" color={color} />,
+          tabBarLabelStyle: {
+            fontSize: 11
+          },
         }}
       />
         <Tabs.Screen
         name="profile"
         options={{
           title: 'Profile',
-          tabBarIcon: ({ color }) => <Ionicons size={28} name="person" color={color} />,
+          tabBarIcon: ({ color }) => <Ionicons size={23} name="person" color={color} />,
+          tabBarLabelStyle: {
+            fontSize: 11
+          },
         }}
       />
   

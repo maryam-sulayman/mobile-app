@@ -1,46 +1,59 @@
 import { Stack, useRouter } from 'expo-router';
 import { useState, useEffect } from 'react';
-import {View, ActivityIndicator} from 'react-native'
-import { hasCompletedOnboarding } from '../utils/onboardingStatus';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { auth } from '../fireBaseConfig'; 
+import { onAuthStateChanged } from 'firebase/auth';
 
 export default function RootLayout() {
-  const [onboarding, setOnboarding] = useState(null); 
+  const [onboarding, setOnboarding] = useState(null);
+  const [user, setUser] = useState(null); 
   const router = useRouter();
 
   useEffect(() => {
-    const checkOnboarding = async () => {
-      const completed = await hasCompletedOnboarding();
-      setOnboarding(!completed); 
-    };
-    checkOnboarding();
+    const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
+      setUser(currentUser);
+    });
+
+    return () => unsubscribe();
   }, []);
+
+  useEffect(() => {
+    const checkOnboarding = async () => {
+      try {
+        const hasCompletedOnboarding = await AsyncStorage.getItem('hasCompletedOnboarding');
+        setOnboarding(hasCompletedOnboarding !== 'true');
+      } catch (error) {
+        console.error('Error checking onboarding status', error);
+        setOnboarding(true); 
+      }
+    };
+
+    if (!user) {
+      checkOnboarding(); 
+    } else {
+      setOnboarding(false);
+    }
+  }, [user]);
 
   useEffect(() => {
     if (onboarding !== null) {
       if (onboarding) {
-        router.replace('/onboarding'); // Navigate to the onboarding flow
+        router.replace('/onboarding'); 
+      } else if (user) {
+        router.replace('/(tabs)/home'); 
       } else {
-        router.replace('/(tabs)'); // Navigate to the main app
+        router.replace('/auth/dashboard'); 
       }
     }
-  }, [onboarding]);
-
-  if (onboarding === null) {
-    // Show a loading spinner while checking onboarding status
-    return (
-      <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-        <ActivityIndicator size="large" color="#0000ff" />
-      </View>
-    );
-  }
-
+  }, [onboarding, user]);
+  
   return (
-    <Stack>
-      <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-      <Stack.Screen name="onboarding" options={{ headerShown: false }} />
-      <Stack.Screen name="pages/sign-in-page" options={{ headerShown: false }} />
-      <Stack.Screen name="+not-found" />
+    <Stack screenOptions={{ headerShown: false }}>
+      {onboarding === null ? null : onboarding ? (
+        <Stack.Screen name="onboarding" />
+      ) : (
+        <Stack.Screen name="(tabs)" />
+      )}
     </Stack>
   );
 }

@@ -1,12 +1,12 @@
-import { View} from 'react-native';
 import SignIn from '../../screens/SignIn'
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 
 export default function SignInPage() {
   return (
-    <View>
+    <SafeAreaView>
       <SignIn/>
-    </View>
+    </SafeAreaView>
   );
 }
 

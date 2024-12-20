@@ -9,7 +9,6 @@ import {
   Platform, 
   ScrollView,
 } from "react-native";
-import { SafeAreaView } from "react-native-safe-area-context";
 import CustomButton from "../components/CustomButton";
 import FormField from "../components/FormField";
 import { router } from "expo-router";
@@ -26,22 +25,25 @@ export default function SignIn() {
 
   const submit = async () => {
     try {
-      await signInWithEmailAndPassword(auth, form.email, form.password);
-      router.replace("/auth/dashboard");
       setIsSubmitting(true);
+      const userCredential = await signInWithEmailAndPassword(auth, form.email, form.password);
+      console.log('Signed in as:', userCredential.user);
+      router.replace("/(tabs)/dashboard");
     } catch (error) {
-      console.error("Error signing in:", error.message);
-      alert(error.message);
+      console.error("Error signing in:", error);
     } finally {
       setIsSubmitting(false);
     }
   };
-
+  
   const goToSignUp = () => {
     router.navigate("/auth/sign-up");
   };
   const goToDashboard = () => {
-    router.navigate("/auth/dashboard");
+    router.navigate("/(tabs)/dashboard");
+  };
+  const goToStaffPage = () => {
+    router.navigate("/auth/staff-sign-in");
   };
 
 
@@ -50,7 +52,6 @@ export default function SignIn() {
       behavior={Platform.OS === "ios" ? "padding" : "height"} 
     >
       <ScrollView>
-        <SafeAreaView>     
           <Image
             source={require("../assets/images/sign-in-hotel-image.jpeg")}
             style={styles.image}
@@ -100,8 +101,10 @@ export default function SignIn() {
                 <Text style={styles.signUpLink}>Sign up</Text>
               </TouchableOpacity>
             </View>
+              <TouchableOpacity onPress={goToStaffPage}>
+              <Text style={styles.staffLogin}>Staff sign in</Text>
+              </TouchableOpacity>
           </View>
-        </SafeAreaView>
       </ScrollView>
     </KeyboardAvoidingView>
   );
@@ -128,7 +131,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center'
   },
   signUpText: {
-    fontSize: 15
+    fontSize: 16
   },
   button: {
     marginTop: 40
@@ -136,7 +139,7 @@ const styles = StyleSheet.create({
   signUpLink: {
     color: '#06102F',
     fontWeight: 700,
-    fontSize: 15
+    fontSize: 16
   },
   image: {
     width: 430,
@@ -157,6 +160,13 @@ const styles = StyleSheet.create({
     marginLeft: 7,
     textDecorationLine: 'underline',
     color: '#06102F',
+  },
+  staffLogin: {
+    fontWeight: 500,
+    textDecorationLine: 'underline',
+    textAlign: 'center',
+    fontSize: 15,
+    marginTop: 10
   }
   })
   

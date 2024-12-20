@@ -1,13 +1,15 @@
 import { View, Text, SafeAreaView, Image, StyleSheet, TouchableOpacity } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import React from 'react';
-import {router} from 'expo-router'
+import { useRouter } from 'expo-router';
+import { markOnboardingComplete } from '../../utils/onboardingStatus';
 
 const Screen4 = () => {
-
-const goToDashboard = () => {
-    router.navigate('/')
-}
+  const router = useRouter();
+  const completeOnboarding = async () => {
+    await markOnboardingComplete();
+    router.replace('/auth/dashboard'); 
+  };
 
 
   return (
@@ -24,7 +26,7 @@ const goToDashboard = () => {
         <Icon name='circle'size={11} color="#06102F"/> 
         </View>
         <View style={styles.buttonContainer}>
-        <TouchableOpacity style={styles.getStartedButton} onPress={goToDashboard} activeOpacity={0.8}>
+        <TouchableOpacity style={styles.getStartedButton} onPress={completeOnboarding} activeOpacity={0.8}>
         <Text style={styles.getStartedText}>Get Started</Text>
         </TouchableOpacity>
         </View>

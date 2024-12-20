@@ -2,7 +2,7 @@ import { View, Text, TouchableOpacity, StyleSheet, ActivityIndicator } from 'rea
 import React from 'react'
 import Icon from 'react-native-vector-icons/FontAwesome';
 
-const customButton = ({title, handlePress, style, isLoading}) => {
+const CustomButton = ({title, handlePress, style, isLoading}) => {
   return (
     <View>
     <TouchableOpacity style={[styles.button, style]}
@@ -21,7 +21,7 @@ const customButton = ({title, handlePress, style, isLoading}) => {
   )
 }
 
-export default customButton
+export default CustomButton
 
 const styles = StyleSheet.create({
 title: {

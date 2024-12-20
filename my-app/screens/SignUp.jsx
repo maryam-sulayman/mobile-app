@@ -4,9 +4,8 @@ import {router} from 'expo-router'
 import { SafeAreaView } from "react-native-safe-area-context";
 import CustomButton from "../components/CustomButton";
 import FormField from "../components/FormField";
-import {Link} from 'expo-router'
 import {auth, database} from '../fireBaseConfig';
-import { createUserWithEmailAndPassword } from 'firebase/auth';
+import { createUserWithEmailAndPassword, updateProfile } from 'firebase/auth';
 import { ref, set } from 'firebase/database';
 
 export default function SignUp() {
@@ -76,6 +75,9 @@ setFormErrors({});
 try{
     const userDetails = await createUserWithEmailAndPassword(auth, form.email, form.password)
     const user = userDetails.user
+    await updateProfile(user, {
+      displayName: form.name.trim(),
+    })
     const userRef = ref(database, 'users/' + user.uid);
     await set(userRef, {
       name: form.name.trim(),
@@ -84,8 +86,8 @@ try{
       role: 'user'
     });
     setTimeout(() => {
-        router.replace('/auth/dashboard');
-      })
+      router.replace('/(tabs)/dashboard');
+    })
 }
 catch (error) {
     setError(error.message)
@@ -169,7 +171,7 @@ const goToSignIn = () => {
 
 const styles = StyleSheet.create({
   background: {
-   backgroundColor: 'linear-gradient(114.9deg, rgb(34, 34, 34) 8.3%, rgb(0, 40, 60) 41.6%, rgb(0, 143, 213) 93.4%)',
+   backgroundColor: 'linear-gradient(109.6deg, rgb(36, 45, 57) 11.2%, rgb(16, 37, 60) 51.2%, rgb(0, 0, 0) 98.6%);',
    height: '100%'
   } , 
 container:{

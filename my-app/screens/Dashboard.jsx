@@ -5,10 +5,24 @@ import FormField from '../components/FormField'
 import fetchRooms from '../utils/fetchRooms.js'
 import Icon from 'react-native-vector-icons/FontAwesome';
 import CustomButton from '../components/CustomButton'
+import {auth} from '../fireBaseConfig'
+import {onAuthStateChanged} from 'firebase/auth'
 
 const Homepage = () => {
 const router = useRouter();
-const [rooms, setRooms] = useState([])
+const [rooms, setRooms] = useState([]);
+const [name, setName] = useState("");
+
+useEffect(() => {
+  const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
+    if (currentUser) {
+      setName(currentUser.displayName|| currentUser.email.split('@')[0]);
+    } 
+  });
+
+  return () => unsubscribe();
+}, []);
+
 
 useEffect(() => {
   const unsubscribe = fetchRooms(setRooms);
@@ -16,7 +30,12 @@ useEffect(() => {
 }, []);
 
 const goToRooms = () => {
-  router.navigate('/pages/roomlist');
+  const user = auth.currentUser;
+  if (!user){
+  router.navigate('/auth/roomlist');
+  } else {
+    router.navigate('/(tabs)/rooms');
+  }
 }
 
 
@@ -65,7 +84,7 @@ const renderRoom = ({ item }) => (
         <Text style={styles.slogan} >Indulge in Luxury – Find Your Dream Room Today</Text>
         </View>
       <View>
-        <Text style={styles.heading}>Welcome</Text>
+        <Text style={styles.heading}>Welcome{name ? `, ${name}` : ''} </Text>
         <Text style={styles.subheading}>Find your desired room</Text>
         <View style={styles.searchContainer}>
         <FormField placeholder='Search' style={styles.searchField}/>
@@ -370,7 +389,6 @@ const styles = StyleSheet.create({
    height: 395
    },
    bookButton: {
-    borderRadius: 0,
     marginRight: 10,
     marginBottom: 50
    },
