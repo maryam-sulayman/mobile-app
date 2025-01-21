@@ -1,12 +1,12 @@
-import { View } from 'react-native'
 import React from 'react'
 import RoomList from '../../screens/RoomList'
+import { SafeAreaView } from 'react-native-safe-area-context'
 
 const roomlist = () => {
   return (
-    <View>
+    <SafeAreaView>
       <RoomList />
-    </View>
+    </SafeAreaView>
   )
 }
 

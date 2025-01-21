@@ -1,13 +1,13 @@
 import React from 'react'
-import BookingHistory from '../../screens/BookingHistory'
+import SingleRoom from '../../../screens/SingleRoom'
 import { SafeAreaView } from 'react-native-safe-area-context'
 
-const bookings = () => {
+const SingleRoomPage = () => {
   return (
     <SafeAreaView>
-      <BookingHistory/>
+      <SingleRoom/>
     </SafeAreaView>
   )
 }
 
-export default bookings
+export default SingleRoomPage

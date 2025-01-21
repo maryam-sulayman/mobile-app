@@ -1,12 +1,12 @@
-import { View } from 'react-native'
 import React from 'react'
 import Payment from '../../screens/Payment'
+import { SafeAreaView } from 'react-native-safe-area-context'
 
 const payment = () => {
   return (
-    <View>
+    <SafeAreaView>
       <Payment/>
-    </View>
+    </SafeAreaView>
   )
 }
 

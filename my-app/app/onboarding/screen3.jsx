@@ -6,7 +6,7 @@ import {router} from 'expo-router'
 const Screen3 = () => {
 
 const goToDashboard = () => {
-    router.navigate('/')
+    router.replace('/pages/dashboard')
 }
 const goToScreenFour = () => {
     router.navigate('/onboarding/screen4')

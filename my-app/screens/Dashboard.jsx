@@ -32,9 +32,9 @@ useEffect(() => {
 const goToRooms = () => {
   const user = auth.currentUser;
   if (!user){
-  router.navigate('/auth/roomlist');
+  router.navigate('/pages/roomlist');
   } else {
-    router.navigate('/(tabs)/rooms');
+    router.navigate('/(tabs)/rooms/roomlist');
   }
 }
 
@@ -85,15 +85,8 @@ const renderRoom = ({ item }) => (
         </View>
       <View>
         <Text style={styles.heading}>Welcome{name ? `, ${name}` : ''} </Text>
-        <Text style={styles.subheading}>Find your desired room</Text>
-        <View style={styles.searchContainer}>
-        <FormField placeholder='Search' style={styles.searchField}/>
-        <View style={styles.filter}>
-        <TouchableOpacity activeOpacity={0.7}>
-          <Image source={require('../assets/images/filter-icon.png')} style={styles.filterImage}/>
-        </TouchableOpacity>
-        </View>
-        </View>
+        <Text style={styles.subheading}>Browse through our rooms and find what works for you!</Text>
+     
         
           <ImageBackground source={require('../assets/images/background.png')}
           style={styles.imageBackground}>
@@ -170,48 +163,6 @@ const renderRoom = ({ item }) => (
        </View>
        </View>
        </View>
-       <View style={styles.footer}>
-       <Text style={[styles.logo, styles.footerLogo]}>
-        <Text> Hotel</Text><Text style={{color: '#E1AF3A'}}>Hive</Text>
-        <Image
-          source={require("../assets/images/bee.png")}
-          resizeMode="contain"
-          style={styles.bee}
-      />
-        </Text>
-        <View style={styles.emailContainer}>
-        <Text style={styles.emailText}>Join our newsletter</Text>
-        <View style={styles.buttonContainer}>
-        <FormField placeholder="Your email address" style={styles.emailInput} textStyles={styles.textInput}/>
-        <CustomButton title="Subscribe" style={styles.footerButton}/>
-        </View>
-        </View>
-        <View style={styles.grid}>
-        <View>
-          <Text style={styles.gridTitle} >Our Locations</Text>
-          <Text style={styles.gridInfo}>London</Text>
-          <Text style={styles.gridInfo}>Birmingham</Text>
-          <Text style={styles.gridInfo}>Manchester</Text>
-        </View>
-        <View>
-        <Text style={styles.gridTitle}>Support</Text>
-        <Text style={styles.gridInfo}>+ (44) 7839834</Text>
-        <Text style={styles.gridInfo}>hotelhive@info.co.uk</Text>
-        <Text style={styles.gridInfo}>hotelhive@support.co.uk</Text>
-        </View>
-        <View>
-        <Text style={styles.gridTitle}>Follow Us</Text>
-        <View style={styles.socialContainer}>
-        <Icon name='instagram'size={22} color="#B82D81" style={styles.gridIcon}/> 
-        <Text style={styles.gridInfo}>Insta</Text>
-        </View>
-        <View style={styles.socialContainer}>
-        <Icon name='twitter'size={22} color="#4EA6E9" style={styles.gridIcon}/> 
-        <Text style={styles.gridInfo}>Twitter</Text>
-        </View>
-        </View>
-        </View>
-       </View>
       </ScrollView>
     </SafeAreaView>
   )
@@ -227,15 +178,16 @@ const styles = StyleSheet.create({
   heading: {
     fontSize: 23,
     fontWeight: 600,
-    marginTop: 20,
+    marginTop: 40,
     marginLeft: 10,
     marginBottom: 20,
   },
   subheading: {
-    fontSize: 17,
+    fontSize: 16,
     marginLeft:12,
-    marginTop: 10,
-    marginBottom: -10
+    marginTop: -5,
+    marginBottom: -15,
+    fontStyle: 'italic'
   },
   searchContainer: {
     flexDirection: 'row',
@@ -442,66 +394,4 @@ const styles = StyleSheet.create({
     paddingHorizontal: 5,
     textAlign: 'center'
    },
-   footer: {
-    height: 450,
-    backgroundColor: '#061031',
-    marginTop: 80,
-    paddingHorizontal: 10,
-    paddingVertical: 15
-   },
-   footerLogo: {
-    left: 5,
-    top: 10,
-    fontSize: 25
-   },
-   emailInput: {
-    width: 280,
-    backgroundColor: "#0B1840",
-    borderColor: '#0B1840',
-    borderRadius: 0,
-   },
-   emailText:{
-    fontSize: 17,
-    color: 'white',
-    fontWeight: 500,
-    marginTop: 90 
-   },
-   buttonContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: 15,
-    marginTop: -7
-   },
-   footerButton: {
-    backgroundColor:'#E1AF3A',
-    borderRadius: 0,
-    marginTop: 15
-   },
-   textInput: {
-    color: 'white',
-    fontSize: 16
-   },
-   grid: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    marginTop: 50
-   },
-   gridTitle:{
-    fontWeight: 700,
-    fontSize: 18,
-    color: 'white'
-   },
-   gridInfo: {
-    color: 'white',
-    marginTop: 20,
-    fontSize: 15
-   },
-   gridIcon:{
-    marginTop: 20
-   },
-   socialContainer:{
-    flexDirection: 'row',
-    justifyContent: 'space-around',
-    alignItems: 'center',
-   }
 })

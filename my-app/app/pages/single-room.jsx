@@ -4,7 +4,7 @@ import { SafeAreaView } from 'react-native-safe-area-context'
 
 const SingleRoomPage = () => {
   return (
-    <SafeAreaView>
+    <SafeAreaView >
       <SingleRoom/>
     </SafeAreaView>
   )

@@ -1,6 +1,7 @@
 import { View, Text, Image, StyleSheet, TouchableOpacity, FlatList } from 'react-native'
 import React, { useState, useEffect } from 'react'
 import FormField from '../components/FormField'
+import { auth } from '../fireBaseConfig'; 
 import fetchRooms from '../utils/fetchRooms'
 import Icon from 'react-native-vector-icons/FontAwesome';
 import CustomButton from '../components/CustomButton';
@@ -9,9 +10,18 @@ import { useRouter } from 'expo-router';
 const RoomList = () => {
   const router = useRouter();
   const [rooms, setRooms] = useState([]);
+  const [user, setUser] = useState(null);
 
   useEffect(() => {
     const unsubscribe = fetchRooms(setRooms);
+    return () => unsubscribe();
+  }, []);
+
+  useEffect(() => {
+    const unsubscribe = auth.onAuthStateChanged((currentUser) => {
+      setUser(currentUser);
+    });
+
     return () => unsubscribe();
   }, []);
 
@@ -37,9 +47,12 @@ const RoomList = () => {
     title="See Details"
     style={styles.button}
     handlePress={() =>
-      router.push({ pathname: '/pages/single-room', params: { room: JSON.stringify(item) } })
-  }
-/>
+      router.navigate({
+        pathname: user ? '/rooms/single-room' : '/pages/single-room',
+        params: { room: JSON.stringify(item) },
+      })
+    }
+/>    
       </View>
     </View>
   );
@@ -65,11 +78,11 @@ const RoomList = () => {
       renderItem={renderRoom}
       ListHeaderComponent={renderHeader}
       contentContainerStyle={styles.container}
+      
     />
   );
 };
 
-export default RoomList;
 const styles = StyleSheet.create({
     container: {
         paddingHorizontal:15,
@@ -167,5 +180,7 @@ const styles = StyleSheet.create({
         marginTop: -20,
         width: 137,
         paddingVertical: 11,
-      }
+      },
+   
     })
+    export default RoomList;

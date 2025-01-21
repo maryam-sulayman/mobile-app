@@ -8,13 +8,15 @@ import {
   KeyboardAvoidingView,
   Platform, 
   ScrollView,
+  Alert
 } from "react-native";
 import CustomButton from "../components/CustomButton";
 import FormField from "../components/FormField";
 import { router } from "expo-router";
 import { signInWithEmailAndPassword } from "firebase/auth";
-import { auth } from "../fireBaseConfig";
+import { auth, database } from "../fireBaseConfig";
 import Icon from 'react-native-vector-icons/FontAwesome';
+import { ref, get } from "firebase/database";
 
 export default function SignIn() {
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -23,29 +25,62 @@ export default function SignIn() {
     password: "",
   });
 
+  
   const submit = async () => {
     try {
       setIsSubmitting(true);
+  
       const userCredential = await signInWithEmailAndPassword(auth, form.email, form.password);
-      console.log('Signed in as:', userCredential.user);
-      router.replace("/(tabs)/dashboard");
+      const user = userCredential.user;
+  
+      const userRef = ref(database, `users/${user.uid}`);
+      const snapshot = await get(userRef);
+  
+      if (snapshot.exists()) {
+        const userData = snapshot.val();
+        console.log('User Data:', userData);
+  
+        if (userData.role === 'admin') {
+          router.replace('/pages/admin-dashboard');
+        } else if (userData.role === 'staff') {
+          router.replace('/pages/staff-dashboard');
+        } else if (userData.role === 'user') {
+          router.replace('/(tabs)/home');
+        } else {
+          Alert.alert('Error', 'Invalid user role. Please contact support.');
+          console.error('Invalid user role:', userData.role);
+        }
+      } else {
+        Alert.alert('Error', 'User data not found in the database.');
+        console.error('User data missing from Firebase.');
+      }
     } catch (error) {
-      console.error("Error signing in:", error);
+      let errorMessage = 'An error occurred. Please try again.';
+      if (error.code === 'auth/invalid-email') {
+        errorMessage = 'The email address is not valid.';
+      } else if (error.code === 'auth/user-not-found') {
+        errorMessage = 'No user found with this email.';
+      } else if (error.code === 'auth/wrong-password') {
+        errorMessage = 'Incorrect password. Please try again.';
+      }
+      Alert.alert('Error', errorMessage);
+      console.error('Error signing in:', error);
     } finally {
       setIsSubmitting(false);
     }
   };
   
+  
   const goToSignUp = () => {
-    router.navigate("/auth/sign-up");
+    router.replace("/auth/sign-up");
   };
   const goToDashboard = () => {
-    router.navigate("/(tabs)/dashboard");
+    router.replace("pages/dashboard");
   };
   const goToStaffPage = () => {
-    router.navigate("/auth/staff-sign-in");
+    router.replace('/auth/staff-sign-in');
   };
-
+  ;
 
   return (
     <KeyboardAvoidingView
@@ -59,7 +94,7 @@ export default function SignIn() {
           <View style={styles.container}>
             <TouchableOpacity style={styles.returnContainer} activeOpacity={0.7} onPress={goToDashboard}>
             <Icon name='angle-left' size={27} color="#06102F" style={styles.icon} />
-            <Text style={styles.returnText}>Return to dashboard</Text>
+            <Text style={styles.returnText}>Keep Browsing Rooms</Text>
             </TouchableOpacity>
             <Text style={styles.title}>
               Sign in to

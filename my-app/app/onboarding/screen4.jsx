@@ -8,7 +8,7 @@ const Screen4 = () => {
   const router = useRouter();
   const completeOnboarding = async () => {
     await markOnboardingComplete();
-    router.replace('/auth/dashboard'); 
+    router.replace('/pages/dashboard'); 
   };
 
 

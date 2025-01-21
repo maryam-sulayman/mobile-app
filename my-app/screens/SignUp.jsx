@@ -86,7 +86,7 @@ try{
       role: 'user'
     });
     setTimeout(() => {
-      router.replace('/(tabs)/dashboard');
+      router.replace('/(tabs)/home');
     })
 }
 catch (error) {
@@ -98,7 +98,7 @@ finally {
   }
 }
 const goToSignIn = () => {
-  router.navigate('/pages/sign-in-page');
+  router.replace('/auth/sign-in');
 }
   return (
     <KeyboardAvoidingView

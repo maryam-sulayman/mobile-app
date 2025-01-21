@@ -1,12 +1,13 @@
-import { View, Text } from 'react-native'
+
 import React from 'react'
 import StaffDashboard from '../../screens/StaffDashboard'
+import { SafeAreaView } from 'react-native-safe-area-context'
 
 const StaffDashboardPage = () => {
   return (
-    <View>
+    <SafeAreaView>
       <StaffDashboard/>
-    </View>
+    </SafeAreaView>
   )
 }
 
